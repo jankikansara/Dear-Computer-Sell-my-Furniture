@@ -1,108 +1,48 @@
-# Show, Attend and Tell 
-<b> Update (December 2, 2016)</b> TensorFlow implementation of [Show, Attend and Tell: Neural Image Caption Generation with Visual Attention](http://arxiv.org/abs/1502.03044) which introduces an attention based image caption generator. The model changes its attention to the relevant part of the image while it generates each word.
+Microsoft COCO Caption Evaluation
+===================
 
-<br/>
+Evaluation codes for MS COCO caption generation.
 
-![alt text](jpg/attention_over_time.jpg "soft attention")
+## Requirements ##
+- java 1.8.0
+- python 2.7
 
-<br/>
+## Files ##
+./
+- cocoEvalCapDemo.py (demo script)
 
+./annotation
+- captions_val2014.json (MS COCO 2014 caption validation set)
+- Visit MS COCO [download](http://mscoco.org/dataset/#download) page for more details.
 
-## References
+./results
+- captions_val2014_fakecap_results.json (an example of fake results for running demo)
+- Visit MS COCO [format](http://mscoco.org/dataset/#format) page for more details.
 
-Author's theano code: https://github.com/kelvinxu/arctic-captions 
+./pycocoevalcap: The folder where all evaluation codes are stored.
+- evals.py: The file includes COCOEavlCap class that can be used to evaluate results on COCO.
+- tokenizer: Python wrapper of Stanford CoreNLP PTBTokenizer
+- bleu: Bleu evalutation codes
+- meteor: Meteor evaluation codes
+- rouge: Rouge-L evaluation codes
+- cider: CIDEr evaluation codes
 
-Another tensorflow implementation: https://github.com/jazzsaxmafia/show_attend_and_tell.tensorflow
+## References ##
 
-<br/>
+- [Microsoft COCO Captions: Data Collection and Evaluation Server](http://arxiv.org/abs/1504.00325)
+- PTBTokenizer: We use the [Stanford Tokenizer](http://nlp.stanford.edu/software/tokenizer.shtml) which is included in [Stanford CoreNLP 3.4.1](http://nlp.stanford.edu/software/corenlp.shtml).
+- BLEU: [BLEU: a Method for Automatic Evaluation of Machine Translation](http://www.aclweb.org/anthology/P02-1040.pdf)
+- Meteor: [Project page](http://www.cs.cmu.edu/~alavie/METEOR/) with related publications. We use the latest version (1.5) of the [Code](https://github.com/mjdenkowski/meteor). Changes have been made to the source code to properly aggreate the statistics for the entire corpus.
+- Rouge-L: [ROUGE: A Package for Automatic Evaluation of Summaries](http://anthology.aclweb.org/W/W04/W04-1013.pdf)
+- CIDEr: [CIDEr: Consensus-based Image Description Evaluation] (http://arxiv.org/pdf/1411.5726.pdf)
 
+## Developers ##
+- Xinlei Chen (CMU)
+- Hao Fang (University of Washington)
+- Tsung-Yi Lin (Cornell)
+- Ramakrishna Vedantam (Virgina Tech)
 
-## Getting Started
-
-### Prerequisites
-
-First, clone this repo and [pycocoevalcap](https://github.com/tylin/coco-caption.git) in same directory.
-
-```bash
-$ git clone https://github.com/yunjey/show-attend-and-tell-tensorflow.git
-$ git clone https://github.com/tylin/coco-caption.git
-```
-
-This code is written in Python2.7 and requires [TensorFlow](https://www.tensorflow.org/versions/r0.11/get_started/os_setup.html#anaconda-installation). In addition, you need to install a few more packages to process [MSCOCO data set](http://mscoco.org/home/). I have provided a script to download the <i>MSCOCO image dataset</i> and [VGGNet19 model](http://www.vlfeat.org/matconvnet/pretrained/). Downloading the data may take several hours depending on the network speed. Run commands below then the images will be downloaded in `image/` directory and <i>VGGNet19 model</i> will be downloaded in `data/` directory.
-
-```bash
-$ cd show-attend-and-tell-tensorflow
-$ pip install -r requirements.txt
-$ chmod +x ./download.sh
-$ ./download.sh
-```
-
-
-For feeding the image to the <i>VGGNet</i>, you should resize the <i>MSCOCO image dataset</i> to the fixed size of 224x224. Run command below then resized images will be stored in `image/train2014_resized/` and `image/val2014_resized/` directory.
-
-```bash
-$ python resize.py
-```
-
-Before training the model, you have to preprocess the <i>MSCOCO caption dataset</i>.
-To generate caption dataset and image feature vectors, run command below.
-
-```bash
-$ python prepro.py
-```
-<br>
-
-### Train the model 
-
-To train the image captioning model, run command below. 
-
-```bash
-$ python train.py
-```
-<br>
-
-### (optional) Tensorboard visualization
-
-I have provided a tensorboard visualization for real-time debugging.
-Open the new terminal, run command below and open `http://localhost:6005/` into your web browser.
-
-```bash
-$ tensorboard --logdir='./log' --port=6005 
-```
-<br>
-
-### Evaluate the model 
-
-To generate captions, visualize attention weights and evaluate the model, please see `evaluate_model.ipynb`.
-
-
-<br/>
-
-## Results
- 
-<br/>
-
-#### Training data
-
-##### (1) Generated caption: A plane flying in the sky with a landing gear down.
-![alt text](jpg/train2.jpg "train image")
-
-##### (2) Generated caption: A giraffe and two zebra standing in the field.
-![alt text](jpg/train.jpg "train image")
-
-#### Validation data
-
-##### (1) Generated caption: A large elephant standing in a dry grass field.
-![alt text](jpg/val.jpg "val image")
-
-##### (2) Generated caption: A baby elephant standing on top of a dirt field.
-![alt text](jpg/val2.jpg "val image")
-
-#### Test data
-
-##### (1) Generated caption: A plane flying over a body of water.
-![alt text](jpg/test.jpg "test image")
-
-##### (2) Generated caption: A zebra standing in the grass near a tree.
-![alt text](jpg/test2.jpg "test image")
-
+## Acknowledgement ##
+- David Chiang (University of Norte Dame)
+- Michael Denkowski (CMU)
+- Alexander Rush (Harvard University)
